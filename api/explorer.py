@@ -22,10 +22,10 @@ def get_header(default_quote):
         dynamic_global_properties = bitshares_ws_client.request('database', 'get_dynamic_global_properties', [])
         chain_id = bitshares_ws_client.request('database', 'get_chain_id', [])
 
-        # core_asset = bitshares_ws_client.get_object("1.3.0")
-        # core_supply = int(core_asset["dynamic"]["current_supply"]) / (10 ** core_asset["precision"])
+        core_asset = bitshares_ws_client.get_object("1.3.0")
+        core_supply = int(core_asset["dynamic"]["current_supply"]) / (10 ** core_asset["precision"])
 
-        global_props = bitshares_ws_client.get_global_properties()
+        # global_props = bitshares_ws_client.get_global_properties()
         # committee_ids = global_props["active_committee_members"]
         # witness_ids = global_props["active_witnesses"]
 
@@ -56,7 +56,7 @@ def get_header(default_quote):
         # Combine all data
         return {
             **dynamic_global_properties,
-            # "core_supply": core_supply,
+            "core_supply": core_supply,
             # "quote_volume": quote_volume,
             # "quote_symbol": default_quote,
             # "committee_count": len(committee_members),
