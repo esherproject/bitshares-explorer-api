@@ -1,42 +1,34 @@
 import connexion
+from flask_cors import CORS
 import logging
+import services.limiter
+from services.cache import cache
+import services.profiler
 
 logging.basicConfig()
 
-options = {'swagger_url': '/apidocs'}
-# strict_validation=True: requests that include parameters not defined return a 400 error
-app = connexion.App('bitshares-explorer-api', specification_dir='swagger/', options=options)
+# Optional: Swagger UI available at http://<host>:5000/apidocs/
+options = {
+    'swagger_url': '/apidocs'
+}
 
-from flask_cors import CORS
+# Create the Connexion app
+app = connexion.App(__name__, specification_dir='swagger', options=options)
+
+# Enable CORS
 CORS(app.app)
 
-from services.cache import cache
+# Initialize Flask extensions
 cache.init_app(app.app)
-
-import services.limiter
 limiter = services.limiter.init(app.app)
-
-import config
-from specsynthase.specbuilder import SpecBuilder
-import glob
-from os import path
-
-spec = SpecBuilder()
-if not 'EXPOSED_APIS' in dir(config) or len(config.EXPOSED_APIS) == 0:
-    for spec_file in glob.glob(path.join(path.dirname(__file__), 'swagger/*')):
-        spec.add_spec(spec_file)
-else:
-    spec.add_spec(path.join(path.dirname(__file__), 'swagger/api.yaml'))
-    for api in config.EXPOSED_APIS:
-        spec.add_spec(path.join(path.dirname(__file__), 'swagger/paths_{}.yaml'.format(api)))   
-app.add_api(spec)
-
-import services.profiler
 services.profiler.init_app(app.app)
 
+# Use the official BitShares OpenAPI spec
+app.add_api('openapi.json', strict_validation=True)
+
+# Entry point for WSGI server (e.g. gunicorn)
 application = app.app
 
-if __name__ == "__main__":
-    app.run(host='127.0.0.1', port=5000, debug=True )
-
-
+# Local dev runner
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
