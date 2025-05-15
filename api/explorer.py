@@ -18,19 +18,19 @@ def _get_core_asset_name():
         return config.CORE_ASSET_SYMBOL
 
 def get_header(default_quote):
-    # response = bitshares_ws_client.request('database', 'get_dynamic_global_properties', [])
-    # return _add_global_informations(response, bitshares_ws_client)
-    # default_quote = request.args.get("default_quote", "USDT")
-    print(f"default_quote: {default_quote}")
     try:
         dyn_props = bitshares_ws_client.get_global_properties()
         chain_id = bitshares_ws_client.request('database', 'get_chain_id', [])
 
-        asset_core = bitshares_ws_client.request("database", "get_assets", [["1.3.0"]])[0]
+        asset_core = bitshares_ws_client.request('database', 'get_assets', [["1.3.0"], 0])[0]
+        print(f"Core Asset: {asset_core}")
         asset_core_dynamic = bitshares_ws_client.request("database", "get_objects", [[asset_core["dynamic_asset_data_id"]]])[0]
+        print(f"Core Asset Dynamic: {asset_core_dynamic}")
         asset_core_supply = int(asset_core_dynamic["current_supply"]) / (10 ** asset_core["precision"])
+        print(f"Core Asset Supply: {asset_core_supply}")
 
         ticker = bitshares_ws_client.request("market_history", "get_ticker", ["1.3.0", default_quote])
+        print(f"Ticker: {ticker}")
         quote_volume = float(ticker.get("quote_volume", 0))
 
         committee_members = bitshares_ws_client.request("database", "list_committee_members", ["", 100])
