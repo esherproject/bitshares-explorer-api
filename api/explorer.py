@@ -21,6 +21,7 @@ def get_header():
     # response = bitshares_ws_client.request('database', 'get_dynamic_global_properties', [])
     # return _add_global_informations(response, bitshares_ws_client)
     default_quote = request.args.get("default_quote", "USDT")
+    print(f"default_quote: {default_quote}")
     try:
         dyn_props = bitshares_ws_client.get_dynamic_global_properties()
         chain_id = bitshares_ws_client.get_chain_id()
@@ -45,6 +46,7 @@ def get_header():
         }
 
     except Exception as e:
+        print(f"An error occurred: {e}")
         return {"error": str(e)}, 500
 
 
