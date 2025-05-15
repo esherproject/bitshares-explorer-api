@@ -10,7 +10,7 @@ paths:
       tags:
       - status
       summary: Route Status
-      operationId: route_status_status_get
+      operationId: status.get_status
       responses:
         '200':
           description: Successful Response
