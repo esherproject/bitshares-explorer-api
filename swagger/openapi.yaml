@@ -2450,15 +2450,13 @@ paths:
         example: bitCNY_BTS
         name: market_pair
         in: path
-      - required: false
-        schema:
-          title: Depth
-          exclusiveMaximum: 500.0
-          minimum: 0.0
-          type: integer
-          default: 100
-        name: depth
+      - name: depth
         in: query
+        type: integer
+        required: false
+        default: 100
+        minimum: 0
+        maximum: 499
       - required: false
         schema:
           title: Level

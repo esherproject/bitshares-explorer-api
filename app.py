@@ -9,7 +9,7 @@ logging.basicConfig()
 
 # Optional: Swagger UI available at http://<host>:5000/apidocs/
 options = {
-    'swagger_url': '/apidocs'
+    'swagger_url': '/docs'
 }
 
 # Create the Connexion app
