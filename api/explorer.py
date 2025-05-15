@@ -17,10 +17,10 @@ def _get_core_asset_name():
     else:
         return config.CORE_ASSET_SYMBOL
 
-def get_header():
+def get_header(default_quote):
     # response = bitshares_ws_client.request('database', 'get_dynamic_global_properties', [])
     # return _add_global_informations(response, bitshares_ws_client)
-    default_quote = request.args.get("default_quote", "USDT")
+    # default_quote = request.args.get("default_quote", "USDT")
     print(f"default_quote: {default_quote}")
     try:
         dyn_props = bitshares_ws_client.get_dynamic_global_properties()
