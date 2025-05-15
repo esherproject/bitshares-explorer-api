@@ -5,12 +5,12 @@ paths:
       description: Get some blockchain information.
       operationId: api.explorer.get_header
       parameters:
-        - name: default_quote
-          in: query
-          required: false
-          description: The quote asset symbol (e.g. USD, BTS, CNY)
-          schema:
-            type: string
+        - in: query
+          name: default_quote
+          default: USDT
+          type: string
+          required: true
+          description: Default quote asset
       responses:
         '200':
           description: Array of operation data
