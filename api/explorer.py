@@ -35,7 +35,7 @@ def get_header(default_quote):
 
         core_symbol = _get_core_asset_name()
         volume = _get_volume(core_symbol, default_quote)
-        quote_volume = volume['base_volume']
+        quote_volume = float(volume['base_volume']) if '.' in str(volume['base_volume']) else int(volume['base_volume'])
 
         # Combine all data
         return {
