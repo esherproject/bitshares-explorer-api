@@ -33,6 +33,7 @@ def get_header(default_quote):
         active_committee_members = global_props["active_committee_members"]
         active_witnesses = global_props["active_witnesses"]
 
+        core_symbol = _get_core_asset_name()
         volume = _get_volume(core_symbol, default_quote)
         quote_volume = volume['base_volume']
 
