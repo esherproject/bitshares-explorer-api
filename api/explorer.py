@@ -23,7 +23,8 @@ def get_header(default_quote):
         chain_id = bitshares_ws_client.request('database', 'get_chain_id', [])
 
         core_asset = bitshares_ws_client.get_object("1.3.0")
-        core_supply = int(core_asset["dynamic"]["current_supply"]) / (10 ** core_asset["precision"])
+        print(f"core_asset: {core_asset}")
+        # core_supply = int(core_asset["dynamic"]["current_supply"]) / (10 ** core_asset["precision"])
 
         # global_props = bitshares_ws_client.get_global_properties()
         # committee_ids = global_props["active_committee_members"]
