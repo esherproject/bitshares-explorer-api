@@ -118,6 +118,9 @@ def get_assets():
     results.sort(key=lambda a : -a['24h_volume']) # sort by volume
     return results
 
+def get_blockchain_info():
+    # return chain id
+    return bitshares_ws_client.request('database', 'get_chain_id', [])
 
 def get_fees():
     return bitshares_ws_client.get_global_properties()

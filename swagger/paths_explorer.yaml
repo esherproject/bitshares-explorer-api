@@ -177,6 +177,18 @@ paths:
       tags:
         - api
         - blockchain
+  "/blockchain":
+    get:
+      description: Get Chain Id.
+      operationId: api.explorer.get_blockchain_info
+      responses:
+        '200':
+          description: Chain Id
+        '500':
+          description: Error processing parameters
+      tags:
+        - api
+        - blockchain
   "/account_history":
     get:
       description: Get history of account by pages
