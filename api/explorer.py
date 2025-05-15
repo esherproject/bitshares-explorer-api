@@ -120,7 +120,9 @@ def get_assets():
 
 def get_blockchain_info():
     # return chain id
-    return bitshares_ws_client.request('database', 'get_chain_id', [])
+    return {
+        "chain_id": bitshares_ws_client.request('database', 'get_chain_id', [])
+    }
 
 def get_fees():
     return bitshares_ws_client.get_global_properties()
