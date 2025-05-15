@@ -1,7 +1,7 @@
 import os
 
 
-WEBSOCKET_URL = os.environ.get('WEBSOCKET_URL', "wss://rcp.eshercrypto.com/")
+WEBSOCKET_URL = os.environ.get('WEBSOCKET_URL', "wss://rpc.eshercrypto.com/")
 
 
 # Default connection to Elastic Search.
