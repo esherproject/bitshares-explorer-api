@@ -52,7 +52,7 @@ PROFILER = {
     'password': os.environ.get('PROFILER_PASSWORD', None),
 }
 
-CORE_ASSET_SYMBOL = 'BTS'
+CORE_ASSET_SYMBOL = 'ESH'
 CORE_ASSET_ID = '1.3.0'
 
 TESTNET = 0 # 0 = not in the testnet, 1 = testnet

@@ -23,7 +23,7 @@ def get_header(default_quote):
         chain_id = bitshares_ws_client.request('database', 'get_chain_id', [])
 
         core_asset = bitshares_ws_client.get_object("2.3.0")
-        precision = core_asset["precision"]
+        precision = 5
         current_supply = core_asset["current_supply"]
         confidential_supply = core_asset["confidential_supply"]
         total_supply = int(current_supply) + int(confidential_supply)
@@ -33,24 +33,6 @@ def get_header(default_quote):
         active_committee_members = global_props["active_committee_members"]
         active_witnesses = global_props["active_witnesses"]
 
-        # Resolve to names
-        # committee_members = [
-        #     bitshares_ws_client.get_object(cid)["committee_member_account"]
-        #     for cid in committee_ids
-        # ]
-        # committee_names = [
-        #     bitshares_ws_client.get_object(acc)["name"]
-        #     for acc in committee_members
-        # ]
-
-        # witness_accounts = [
-        #     bitshares_ws_client.get_object(wid)["witness_account"]
-        #     for wid in witness_ids
-        # ]
-        # witness_names = [
-        #     bitshares_ws_client.get_object(acc)["name"]
-        #     for acc in witness_accounts
-        # ]
 
         # ticker = bitshares_ws_client.request("market_history", "get_ticker", ["1.3.0", default_quote])
         # quote_volume = float(ticker.get("quote_volume", 0))
