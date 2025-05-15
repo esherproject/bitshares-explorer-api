@@ -18,8 +18,35 @@ def _get_core_asset_name():
         return config.CORE_ASSET_SYMBOL
 
 def get_header():
-    response = bitshares_ws_client.request('database', 'get_dynamic_global_properties', [])
-    return _add_global_informations(response, bitshares_ws_client)
+    # response = bitshares_ws_client.request('database', 'get_dynamic_global_properties', [])
+    # return _add_global_informations(response, bitshares_ws_client)
+    default_quote = request.args.get("default_quote", "USDT")
+    try:
+        dyn_props = bitshares_ws_client.get_dynamic_global_properties()
+        chain_id = bitshares_ws_client.get_chain_id()
+        asset_core = bitshares_ws_client.get_asset("1.3.0")
+        asset_core_supply = int(asset_core["dynamic"]["current_supply"]) / (10 ** asset_core["precision"])
+
+        ticker = bitshares_ws_client.get_ticker(base="1.3.0", quote=default_quote)
+        quote_volume = float(ticker["quote_volume"]) if "quote_volume" in ticker else 0.0
+
+        committee_members = bitshares_ws_client.list_committee_members()
+        witness_list = bitshares_ws_client.list_witnesses()
+
+        # Combine all data
+        return {
+            **dyn_props,
+            "core_supply": asset_core_supply,
+            "quote_volume": quote_volume,
+            "quote_symbol": default_quote,
+            "committee_count": len(committee_members),
+            "witness_count": len(witness_list),
+            "chain_id": chain_id
+        }
+
+    except Exception as e:
+        return {"error": str(e)}, 500
+
 
 
 @cache.memoize()

@@ -1,4 +1,29 @@
 paths:
+  paths:
+  /header:
+    get:
+      description: Get some blockchain information.
+      operationId: api.explorer.get_header
+      parameters:
+        - name: default_quote
+          in: query
+          required: false
+          description: The quote asset symbol (e.g. USD, BTS, CNY)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Blockchain header information
+          content:
+            application/json:
+              schema:
+                type: object
+        '500':
+          description: Error processing parameters
+      tags:
+        - api
+        - blockchain
+
   "/header":
     get:
       description: Get some blockchain information.
