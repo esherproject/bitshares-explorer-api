@@ -23,8 +23,8 @@ def get_header(default_quote):
     # default_quote = request.args.get("default_quote", "USDT")
     print(f"default_quote: {default_quote}")
     try:
-        dyn_props = bitshares_ws_client.get_dynamic_global_properties()
-        chain_id = bitshares_ws_client.get_chain_id()
+        dyn_props = bitshares_ws_client.get_global_properties()
+        chain_id = bitshares_ws_client.request('database', 'get_chain_id', [])
         asset_core = bitshares_ws_client.get_asset("1.3.0")
         asset_core_supply = int(asset_core["dynamic"]["current_supply"]) / (10 ** asset_core["precision"])
 
