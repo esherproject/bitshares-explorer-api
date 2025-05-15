@@ -1,5 +1,4 @@
 paths:
-  paths:
   "/header":
     get:
       description: Get some blockchain information.
