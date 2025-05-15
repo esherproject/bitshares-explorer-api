@@ -24,11 +24,7 @@ limiter = services.limiter.init(app.app)
 services.profiler.init_app(app.app)
 
 # Use the official BitShares OpenAPI spec
-app.add_api(
-    'openapi.json',
-    strict_validation=True,
-    validate_responses=True
-)
+app.add_api("openapi.yaml", strict_validation=True, validate_responses=True)
 
 # Entry point for WSGI server (e.g. gunicorn)
 application = app.app
