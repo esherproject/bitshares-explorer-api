@@ -19,14 +19,13 @@ def _get_core_asset_name():
 
 def get_header(default_quote):
     try:
-        dynamic_global_properties = bitshares_ws_client.request('database', 'get_dynamic_global_properties', [])
+        # dynamic_global_properties = bitshares_ws_client.request('database', 'get_dynamic_global_properties', [])
         chain_id = bitshares_ws_client.request('database', 'get_chain_id', [])
 
-        core_asset = bitshares_ws_client.get_object("1.3.0")
-        core_supply = int(core_asset["dynamic"]["current_supply"]) / (10 ** core_asset["precision"])
+        # core_asset = bitshares_ws_client.get_object("1.3.0")
+        # core_supply = int(core_asset["dynamic"]["current_supply"]) / (10 ** core_asset["precision"])
 
         global_props = bitshares_ws_client.get_global_properties()
-        print(f"Global Props: {global_props}")
         # committee_ids = global_props["active_committee_members"]
         # witness_ids = global_props["active_witnesses"]
 
@@ -51,18 +50,18 @@ def get_header(default_quote):
 
         # ticker = bitshares_ws_client.request("market_history", "get_ticker", ["1.3.0", default_quote])
         # quote_volume = float(ticker.get("quote_volume", 0))
-        committee_members = bitshares_ws_client.request("database", "list_committee_members", ["", 100])
-        witness_list = bitshares_ws_client.request("database", "list_witnesses", ["", 100])
+        # committee_members = bitshares_ws_client.request("database", "list_committee_members", ["", 100])
+        # witness_list = bitshares_ws_client.request("database", "list_witnesses", ["", 100])
 
         # Combine all data
         return {
-            **dynamic_global_properties,
-            "core_supply": core_supply,
+            **global_props,
+            # "core_supply": core_supply,
             # "quote_volume": quote_volume,
             # "quote_symbol": default_quote,
-            "committee_count": len(committee_members),
-            "witness_count": len(witness_list),
-            "chain_id": chain_id
+            # "committee_count": len(committee_members),
+            # "witness_count": len(witness_list),
+            # "chain_id": chain_id
         }
 
     except Exception as e:
