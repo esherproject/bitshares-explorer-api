@@ -19,29 +19,49 @@ def _get_core_asset_name():
 
 def get_header(default_quote):
     try:
-        dyn_props = bitshares_ws_client.get_global_properties()
+        dyn_glob_props = bitshares_ws_client.get_dynamic_global_properties()
         chain_id = bitshares_ws_client.request('database', 'get_chain_id', [])
 
-        asset_core = bitshares_ws_client.request('database', 'get_assets', [["1.3.0"], 0])[0]
-        print(f"Core Asset: {asset_core}")
-        asset_core_dynamic = bitshares_ws_client.request("database", "get_objects", [[asset_core["dynamic_asset_data_id"]]])[0]
-        print(f"Core Asset Dynamic: {asset_core_dynamic}")
-        asset_core_supply = int(asset_core_dynamic["current_supply"]) / (10 ** asset_core["precision"])
-        print(f"Core Asset Supply: {asset_core_supply}")
+        core_asset = bitshares_ws_client.get_object("1.3.0")
+        core_supply = int(core_asset["dynamic"]["current_supply"]) / (10 ** core_asset["precision"])
+
+        global_props = bitshares_ws_client.get_global_properties()
+        print(f"Global Props: {global_props}")
+        # committee_ids = global_props["active_committee_members"]
+        # witness_ids = global_props["active_witnesses"]
+
+        # Resolve to names
+        # committee_members = [
+        #     bitshares_ws_client.get_object(cid)["committee_member_account"]
+        #     for cid in committee_ids
+        # ]
+        # committee_names = [
+        #     bitshares_ws_client.get_object(acc)["name"]
+        #     for acc in committee_members
+        # ]
+
+        # witness_accounts = [
+        #     bitshares_ws_client.get_object(wid)["witness_account"]
+        #     for wid in witness_ids
+        # ]
+        # witness_names = [
+        #     bitshares_ws_client.get_object(acc)["name"]
+        #     for acc in witness_accounts
+        # ]
 
         # ticker = bitshares_ws_client.request("market_history", "get_ticker", ["1.3.0", default_quote])
         # quote_volume = float(ticker.get("quote_volume", 0))
-        # committee_members = bitshares_ws_client.request("database", "list_committee_members", ["", 100])
-        # witness_list = bitshares_ws_client.request("database", "list_witnesses", ["", 100])
+        committee_members = bitshares_ws_client.request("database", "list_committee_members", ["", 100])
+        witness_list = bitshares_ws_client.request("database", "list_witnesses", ["", 100])
 
         # Combine all data
         return {
-            **dyn_props,
-            "core_supply": asset_core_supply,
+            **dyn_glob_props,
+            "core_supply": core_supply,
             # "quote_volume": quote_volume,
-            "quote_symbol": default_quote,
-            # "committee_count": len(committee_members),
-            # "witness_count": len(witness_list),
+            # "quote_symbol": default_quote,
+            "committee_count": len(committee_members),
+            "witness_count": len(witness_list),
             "chain_id": chain_id
         }
 
