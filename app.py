@@ -3,13 +3,9 @@ import logging
 
 logging.basicConfig()
 
-# Optional: Swagger UI available at http://<host>:5000/apidocs/
-options = {
-    'swagger_url': '/docs'
-}
-
-# Create the Connexion app
-app = connexion.App(__name__, specification_dir='swagger', options=options)
+options = {'swagger_url': '/apidocs'}
+# strict_validation=True: requests that include parameters not defined return a 400 error
+app = connexion.App('bitshares-explorer-api', specification_dir='swagger/', options=options)
 
 from flask_cors import CORS
 CORS(app.app)
