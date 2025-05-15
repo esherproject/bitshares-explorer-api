@@ -22,7 +22,7 @@ def get_header(default_quote):
         dynamic_global_properties = bitshares_ws_client.request('database', 'get_dynamic_global_properties', [])
         chain_id = bitshares_ws_client.request('database', 'get_chain_id', [])
 
-        core_asset = ws_client.get_object('2.3.0')
+        core_asset = bitshares_ws_client.get_object("2.3.0")
         precision = core_asset["precision"]
         current_supply = core_asset["current_supply"]
         confidential_supply = core_asset["confidential_supply"]
