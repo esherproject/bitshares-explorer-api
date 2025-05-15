@@ -33,18 +33,15 @@ def get_header(default_quote):
         active_committee_members = global_props["active_committee_members"]
         active_witnesses = global_props["active_witnesses"]
 
-
-        # ticker = bitshares_ws_client.request("market_history", "get_ticker", ["1.3.0", default_quote])
-        # quote_volume = float(ticker.get("quote_volume", 0))
-        # committee_members = bitshares_ws_client.request("database", "list_committee_members", ["", 100])
-        # witness_list = bitshares_ws_client.request("database", "list_witnesses", ["", 100])
+        volume = _get_volume(core_symbol, default_quote)
+        quote_volume = volume['base_volume']
 
         # Combine all data
         return {
             **dynamic_global_properties,
             "core_supply": core_supply,
-            # "quote_volume": quote_volume,
-            # "quote_symbol": default_quote,
+            "quote_volume": quote_volume,
+            "quote_symbol": default_quote,
             "committee_count": len(active_committee_members),
             "witness_count": len(active_witnesses),
             "chain_id": chain_id
