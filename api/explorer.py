@@ -25,14 +25,16 @@ def get_header(default_quote):
     try:
         dyn_props = bitshares_ws_client.get_global_properties()
         chain_id = bitshares_ws_client.request('database', 'get_chain_id', [])
-        asset_core = bitshares_ws_client.get_asset("1.3.0")
-        asset_core_supply = int(asset_core["dynamic"]["current_supply"]) / (10 ** asset_core["precision"])
 
-        ticker = bitshares_ws_client.get_ticker(base="1.3.0", quote=default_quote)
-        quote_volume = float(ticker["quote_volume"]) if "quote_volume" in ticker else 0.0
+        asset_core = bitshares_ws_client.request("database", "get_assets", [["1.3.0"]])[0]
+        asset_core_dynamic = bitshares_ws_client.request("database", "get_objects", [[asset_core["dynamic_asset_data_id"]]])[0]
+        asset_core_supply = int(asset_core_dynamic["current_supply"]) / (10 ** asset_core["precision"])
 
-        committee_members = bitshares_ws_client.list_committee_members()
-        witness_list = bitshares_ws_client.list_witnesses()
+        ticker = bitshares_ws_client.request("market_history", "get_ticker", ["1.3.0", default_quote])
+        quote_volume = float(ticker.get("quote_volume", 0))
+
+        committee_members = bitshares_ws_client.request("database", "list_committee_members", ["", 100])
+        witness_list = bitshares_ws_client.request("database", "list_witnesses", ["", 100])
 
         # Combine all data
         return {
