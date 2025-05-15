@@ -22,13 +22,16 @@ def get_header(default_quote):
         dynamic_global_properties = bitshares_ws_client.request('database', 'get_dynamic_global_properties', [])
         chain_id = bitshares_ws_client.request('database', 'get_chain_id', [])
 
-        core_asset = bitshares_ws_client.get_object("1.3.0")
-        print(f"core_asset: {core_asset}")
-        # core_supply = int(core_asset["dynamic"]["current_supply"]) / (10 ** core_asset["precision"])
+        core_asset = ws_client.get_object('2.3.0')
+        precision = core_asset["precision"]
+        current_supply = core_asset["current_supply"]
+        confidential_supply = core_asset["confidential_supply"]
+        total_supply = int(current_supply) + int(confidential_supply)
+        core_supply = int(current_supply) / (10 ** precision)
 
-        # global_props = bitshares_ws_client.get_global_properties()
-        # committee_ids = global_props["active_committee_members"]
-        # witness_ids = global_props["active_witnesses"]
+        global_props = bitshares_ws_client.get_global_properties()
+        active_committee_members = global_props["active_committee_members"]
+        active_witnesses = global_props["active_witnesses"]
 
         # Resolve to names
         # committee_members = [
@@ -60,8 +63,8 @@ def get_header(default_quote):
             "core_supply": core_supply,
             # "quote_volume": quote_volume,
             # "quote_symbol": default_quote,
-            # "committee_count": len(committee_members),
-            # "witness_count": len(witness_list),
+            "committee_count": len(active_committee_members),
+            "witness_count": len(active_witnesses),
             "chain_id": chain_id
         }
 
