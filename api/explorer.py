@@ -29,21 +29,19 @@ def get_header(default_quote):
         asset_core_supply = int(asset_core_dynamic["current_supply"]) / (10 ** asset_core["precision"])
         print(f"Core Asset Supply: {asset_core_supply}")
 
-        ticker = bitshares_ws_client.request("market_history", "get_ticker", ["1.3.0", default_quote])
-        print(f"Ticker: {ticker}")
-        quote_volume = float(ticker.get("quote_volume", 0))
-
-        committee_members = bitshares_ws_client.request("database", "list_committee_members", ["", 100])
-        witness_list = bitshares_ws_client.request("database", "list_witnesses", ["", 100])
+        # ticker = bitshares_ws_client.request("market_history", "get_ticker", ["1.3.0", default_quote])
+        # quote_volume = float(ticker.get("quote_volume", 0))
+        # committee_members = bitshares_ws_client.request("database", "list_committee_members", ["", 100])
+        # witness_list = bitshares_ws_client.request("database", "list_witnesses", ["", 100])
 
         # Combine all data
         return {
             **dyn_props,
             "core_supply": asset_core_supply,
-            "quote_volume": quote_volume,
+            # "quote_volume": quote_volume,
             "quote_symbol": default_quote,
-            "committee_count": len(committee_members),
-            "witness_count": len(witness_list),
+            # "committee_count": len(committee_members),
+            # "witness_count": len(witness_list),
             "chain_id": chain_id
         }
 
