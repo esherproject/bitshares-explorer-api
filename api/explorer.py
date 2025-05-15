@@ -19,7 +19,7 @@ def _get_core_asset_name():
 
 def get_header(default_quote):
     try:
-        # dynamic_global_properties = bitshares_ws_client.request('database', 'get_dynamic_global_properties', [])
+        dynamic_global_properties = bitshares_ws_client.request('database', 'get_dynamic_global_properties', [])
         chain_id = bitshares_ws_client.request('database', 'get_chain_id', [])
 
         # core_asset = bitshares_ws_client.get_object("1.3.0")
@@ -55,13 +55,13 @@ def get_header(default_quote):
 
         # Combine all data
         return {
-            **global_props,
+            **dynamic_global_properties,
             # "core_supply": core_supply,
             # "quote_volume": quote_volume,
             # "quote_symbol": default_quote,
             # "committee_count": len(committee_members),
             # "witness_count": len(witness_list),
-            # "chain_id": chain_id
+            "chain_id": chain_id
         }
 
     except Exception as e:
