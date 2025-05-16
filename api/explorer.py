@@ -33,12 +33,8 @@ def get_header(default_quote):
         active_committee_members = global_props["active_committee_members"]
         active_witnesses = global_props["active_witnesses"]
 
-        # core_symbol = _get_core_asset_name()
-        # volume = _get_volume(core_symbol, default_quote)
-        # quote_volume = float(volume['base_volume']) if '.' in str(volume['base_volume']) else int(volume['base_volume'])
-
-        eshQuoteVolume = ws_client.request('database', 'get_24_volume', ["ESH", default_quote])
-        quote_volume = eshQuoteVolume["quote_volume"]
+        volume = _get_volume('ESH', default_quote)
+        quote_volume = float(volume['quote_volume']) if '.' in str(volume['quote_volume']) else int(volume['quote_volume'])
 
         # Combine all data
         return {
