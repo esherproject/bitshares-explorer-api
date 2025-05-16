@@ -105,7 +105,7 @@ In order to simply test and run the backend api you can do:
 
 Then go to apidocs with your IP:
 
-[http://127.0.0.1:5000/apidocs/](http://127.0.0.1:5000/apidocs/)
+[http://127.0.0.1:5000/docs/](http://127.0.0.1:5000/docs/)
 
 ### Nginx and uwsgi
 
