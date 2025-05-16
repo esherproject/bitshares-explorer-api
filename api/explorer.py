@@ -33,9 +33,12 @@ def get_header(default_quote):
         active_committee_members = global_props["active_committee_members"]
         active_witnesses = global_props["active_witnesses"]
 
-        core_symbol = _get_core_asset_name()
-        volume = _get_volume(core_symbol, default_quote)
-        quote_volume = float(volume['base_volume']) if '.' in str(volume['base_volume']) else int(volume['base_volume'])
+        # core_symbol = _get_core_asset_name()
+        # volume = _get_volume(core_symbol, default_quote)
+        # quote_volume = float(volume['base_volume']) if '.' in str(volume['base_volume']) else int(volume['base_volume'])
+
+        eshQuoteVolume = ws_client.request('database', 'get_24_volume', ["ESH", default_quote])
+        quote_volume = eshQuoteVolume["quote_volume"]
 
         # Combine all data
         return {
@@ -79,7 +82,7 @@ def _add_global_informations(response, ws_client):
     response["bts_market_cap"] = int(market_cap/100000000)
 
     if config.TESTNET != 1: # Todo: had to do something else for the testnet
-        btsBtcVolume = ws_client.request('database', 'get_24_volume', ["BTS", "OPEN.BTC"])
+        btsBtcVolume = ws_client.request('database', 'get_24_volume', ["ESH", "USDT"])
         response["quote_volume"] = btsBtcVolume["quote_volume"]
     else:
         response["quote_volume"] = 0
